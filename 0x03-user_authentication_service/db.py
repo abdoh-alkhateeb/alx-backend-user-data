@@ -20,7 +20,7 @@ class DB:
         """
         Initialize a new DB instance.
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -39,12 +39,6 @@ class DB:
         """
         Adds a user.
         """
-        if not email or not hashed_password:
-            return None
-
         user = User(email=email, hashed_password=hashed_password)
-
         self._session.add(user)
-        self._session.commit()
-
         return user
